@@ -49,11 +49,18 @@ class TestMenuCommand(unittest.TestCase):
 
 class TestYandex(unittest.TestCase):
     token = ''
+
     def test_YaUploader_new_folder_1(self):
         #Проверка кода ответа
         uploader = main.YaUploader('TEST')
         result = uploader.new_folder()
         self.assertEqual("Папка на создана на Я.Диск", result)
+
+    def test_YaUploader_new_folder_1_1(self):
+        #Проверка кода ответа
+        uploader = main.YaUploader('/TEST')
+        result = uploader.new_folder()
+        self.assertEqual("Ошибка 409, возможно папка уже существует, либо в названии папки есть /", result)
 
     def test_YaUploader_new_folder_2(self):
         #Есть ли папка
@@ -68,8 +75,6 @@ class TestYandex(unittest.TestCase):
                 dirs.append(item['name'])
         self.assertIn("TEST", dirs, 'Папка не была создана')
 
-    @classmethod
-    def tearDownClass(cls):
         #Удаление тестовой папки
         url = 'https://cloud-api.yandex.net/v1/disk/resources'
         headers = {'Content-Type': 'application/json',
@@ -78,4 +83,4 @@ class TestYandex(unittest.TestCase):
         requests.delete(url, headers=headers, params=params)
 
 if __name__ == '__main__':
-  unittest.main()
+    unittest.main()

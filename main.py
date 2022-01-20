@@ -147,7 +147,7 @@ class YaUploader:
     if res.status_code == 201:
       return 'Папка на создана на Я.Диск'
     if res.status_code == 409:
-      return 'Ошибка 409, возможно папка уже существует'
+      return "Ошибка 409, возможно папка уже существует, либо в названии папки есть /"
     return f'Ошибка {res.status_code}'
 
 
